@@ -1,0 +1,135 @@
+// 归并排序
+import java.util.Scanner;
+
+public class Main {
+	
+	static int n;
+	static int[] a;
+	static int[] b;
+	
+	static void MergeSort(int[] a, int from, int to) {
+		int tag, i, j;
+		if (from < to) {
+			int pos = (to + from) / 2;
+			
+			MergeSort(a, from, pos);
+			MergeSort(a, pos + 1, to);
+			
+			if (from <= pos) {
+				for (tag = from, i = from, j = pos + 1; i <= pos && j <= to;) {
+					if (a[i] < a[j]) {
+						b[tag++] = a[i++];
+					} else if (a[i] > a[j]) {
+						b[tag++] = a[j++];
+					} else if (a[i] == a[j]) {
+						b[tag++] = a[i++];
+						b[tag++] = a[j++];
+					}
+				}
+				while (i <= pos) b[tag++] = a[i++];
+				while (j <= to) b[tag++] = a[j++];
+				for (int m = from; m <= to; m++) {
+					a[m] = b[m];
+				}
+				
+			}
+		}
+	}
+	public static void main(String[] args) {
+		Scanner in = new Scanner(System.in);
+		n = in.nextInt();
+		a = new int[n];
+		b = new int[n];
+		for (int i = 0; i < n; i++) {
+			a[i] = in.nextInt();
+		}
+		
+		MergeSort(a, 0, n - 1);
+		
+		for (int i = 0; i < n; i++) {
+			System.out.print(b[i]);
+		}
+		System.out.println();
+	}
+}
+
+
+/*
+ * 人鬼过河
+ */
+/*
+import java.util.Map;
+import java.util.Queue;
+import java.util.Scanner;
+
+public class Main {
+	// 人鬼过河 3人3鬼 河上只有一条小船，船上最多能坐两个人或鬼，在河的任何一边
+	// 当鬼的个数比人多时，鬼就会吃掉人。
+	
+	static int[] person; // 人  0为未过河 1为已经过河 
+	static int[] ghost; // 鬼 同上  
+	static int[] num = new int[21];
+	static int count = 0; // 每运一次船就加一
+	static int ok1 = 0; // 人数
+	static int ok2 = 0; // 鬼数
+	static int tag = 1;
+	
+	static class Boat {
+		int p = 0; // 人的数量
+		int g = 0; // 鬼的数量
+	}
+	
+	static Queue<Boat> b;
+	
+	static void DFS(int x) {
+		if (count <= 20) {
+			for (int i = 1; i <= 3; i++) {
+				if (person[i] == 1) ok1++;
+				if (ghost[i] == 1) ok2++;
+			}
+			if (ok1 == 3 && ok2 == 3) {
+				// 输出
+				for (int i = 0; i < b.size(); i++) {
+					Boat boat = b.poll();
+					if (boat.p == 0 && boat.g == 1) {
+						System.out.println("0人1鬼过河");
+					} else if (boat.p == 0 && boat.g == 2) {
+						System.out.println("0人2鬼过河");
+					} else if (boat.p == 1 && boat.g == 0) {
+						System.out.println("1人0鬼过河");
+					} else if (boat.p == 2 && boat.g == 0) {
+						System.out.println("2人0鬼过河");
+					} 
+				}
+				
+			} else {
+				// 递归回溯
+				int temp1 = 0, temp2 = 0;
+				if (ok2 <= ok1 || 3 - ok2 <= 3 - ok1) { // 两边岸存在人大于鬼的情况 否则直接退出
+					if (tag == 1) { // 船在河这边
+						for (int i = 1; i <= 3; i++) { 
+							if (person[i] == 0) temp1++;// 计算在河这边的人数
+							if (ghost[i] == 0) temp2++; // 计算河对岸的人数
+						}
+						
+						
+					} else if (tag == -1) { // 船在河对岸
+						
+					}
+				}
+				
+			}
+		}
+		ok1 = 0;
+		ok2 = 0;
+		
+	}
+
+    public static void main(String[] args) {
+        
+    	person = new int[4];
+    	ghost = new int[4];
+    	
+    }
+}
+*/

@@ -1,0 +1,371 @@
+import java.util.Scanner;
+
+public class Main {
+	// 从第一个元素开始判断是否在子集中 不在为0
+	// 在为1 全部完成之后 输出
+	static int n; // n个数
+	static int k; // k个互不相交的子集
+	static int ok; // 判断是否有k个子集
+	static int count = 0; // 记录子集个数  
+	static int[] a;
+	static int[] flag;
+	
+	static void DFS(int x) {
+		if (x > n) { 
+			// 输出
+			for (int i = 1; i <= k; i++) {
+				System.out.println("i1 = " + i);
+				for (int j = 1; j <= n; j++) {
+					if (flag[j] == i) {
+						System.out.println("i1 = " + i);
+						ok += i;
+						j =n+1;
+					}
+				}
+				System.out.println("ok = " + ok);
+				
+			}
+			
+			if (ok == ((1 + k) * k / 2)) {
+				for (int i = 1; i <= n; i++) {
+					System.out.print(flag[i]);
+				}
+				System.out.println();
+				for (int i = 1; i <= k ; i++) {
+					for (int j = 1; j <= n; j++) {
+						if (flag[j] == i) {
+							System.out.print(a[j]);
+						}
+					}
+					System.out.print(" ");
+				}
+				System.out.println();
+			}
+		} else {
+			for (int i = 1; i <= k; i++) {
+				flag[x] = i;
+				DFS(x + 1);
+				flag[x] = 0;
+			}
+		}
+		
+	}
+
+    public static void main(String[] args) {
+        
+    	Scanner in = new Scanner(System.in);
+    	n = in.nextInt();
+    	k = in.nextInt();
+    
+    	a = new int[n + 1];
+    	flag = new int[n + 1];
+    	
+    	for (int i = 1; i <= n; i++) {
+    		a[i] = i;
+    	}
+    	
+    	DFS(1);
+    	
+    }
+}
+
+/*
+ * 求和为s的子集
+ *import java.util.Scanner;
+
+public class Main {
+	// 从第一个元素开始判断是否在子集中 不在为0
+	// 在为1 全部完成之后 输出
+	static int n; // n个数
+	static int s;
+	static int sum = 0;
+	static int[] a; // 用于存储子集
+	static int[] flag; // n个数的标志位
+	static int count = 0;
+	static void DFS(int x) {
+		if (x > n) { 
+			// 输出
+			for (int i = 1; i <= n; i++) {
+				if (flag[i] == 1) sum += a[i];
+			}
+			if (sum == s) {
+				for (int i = 1; i <= n; i++) {
+					if (flag[i] == 1) {
+						System.out.print(a[i]);
+					}
+				}
+				
+				System.out.println();
+			}
+			sum = 0;
+		} else {
+			for (int i = 0; i < 2; i++) {
+				flag[x] = i;
+				DFS(x + 1);
+			}
+		}
+		
+	}
+
+    public static void main(String[] args) {
+        
+    	Scanner in = new Scanner(System.in);
+    	n = in.nextInt();
+    	s = in.nextInt();
+    
+    	a = new int[n + 1];
+    	flag = new int[n + 1];
+    	
+    	for (int i = 1; i <= n; i++) {
+    		a[i] = i;
+    	}
+    	
+    	DFS(1);
+    	
+    }
+}
+ */
+/* 求n的包含k个元素的子集
+ import java.util.Scanner;
+
+public class Main {
+	// 从第一个元素开始判断是否在子集中 不在为0
+	// 在为1 全部完成之后 输出
+	static int n; // n个数
+	static int k;
+	static int sum = 0;
+	static int[] a; // 用于存储子集
+	static int[] flag; // n个数的标志位
+	static int count = 0;
+	static void DFS(int x) {
+		if (x > n) { 
+			// 输出
+			for (int i = 1; i <= n; i++) {
+				if (flag[i] == 1) sum++;
+			}
+			if (sum == k) {
+				for (int i = 1; i <= n; i++) {
+					if (flag[i] == 1) {
+						System.out.print(a[i]);
+					}
+				}
+				
+				System.out.println();
+			}
+			sum = 0;
+		} else {
+			for (int i = 0; i < 2; i++) {
+				flag[x] = i;
+				DFS(x + 1);
+			}
+		}
+		
+	}
+
+    public static void main(String[] args) {
+        
+    	Scanner in = new Scanner(System.in);
+    	n = in.nextInt();
+    	k = in.nextInt();
+    	System.out.println(n);
+    	System.out.println(k);
+    	a = new int[n + 1];
+    	flag = new int[n + 1];
+    	
+    	for (int i = 1; i <= n; i++) {
+    		a[i] = i;
+    	}
+    	
+    	DFS(1);
+    	System.out.println("end");
+    }
+}
+ */
+
+
+/*
+ //求子集
+  * 二叉树 不需要将标记改回 因为对后面几层都没有影响
+import java.util.Scanner;
+
+public class Main {
+	// 从第一个元素开始判断是否在子集中 不在为0
+	// 在为1 全部完成之后 输出
+	static int n; // n个数
+	static int[] a; // 用于存储子集
+	static int[] flag; // n个数的标志位
+	static int count = 0;
+	static void DFS(int x) {
+		if (x > n) { 
+			// 输出
+			
+			for (int i = 1; i <= n; i++) {
+				if (flag[i] == 1) {
+					System.out.print(a[i]);
+				}
+			}
+			count++;
+			System.out.println();
+		} else {
+			for (int i = 0; i < 2; i++) {
+				flag[x] = i;
+				DFS(x + 1);
+			}
+		}
+		
+	}
+
+    public static void main(String[] args) {
+        
+    	Scanner in = new Scanner(System.in);
+    	n = in.nextInt();
+    	a = new int[n + 1];
+    	flag = new int[n + 1];
+    	
+    	for (int i = 1; i <= n; i++) {
+    		a[i] = i;
+    	}
+    	
+    	DFS(1);
+    }
+}
+*/
+
+// 1-n中的m个全排列
+/* static int n; // n个数
+	static int m; // m个数的全排列
+	static int[] a; // 用于输出m个数的全排列
+	static int[] flag; // n个数的标志位
+	
+	static void DFS(int x) {
+		if (x == m + 1) {
+			// 输出
+			for (int i = 1; i <= m; i++){
+				System.out.print(a[i]);
+			}
+			System.out.println();
+		}
+		else {
+			for (int i = 1; i <= n; i++) {
+					if (flag[i] == 0) {
+						flag[i] = 1;
+						
+						a[x] = i;
+						DFS(x + 1);
+						
+						flag[i] = 0;
+					}
+				
+			}
+			
+		}
+	}
+
+    public static void main(String[] args) {
+        
+    	Scanner in = new Scanner(System.in);
+    	n = in.nextInt();
+    	m = in.nextInt();
+    	
+    	flag = new int[n + 1];
+    	a = new int[m + 1];
+    	
+    	
+    	DFS(1);
+    }*/
+// 1-n的全排列
+/*
+static int n;
+static int[] a;
+static int[] flag;
+
+static void DFS(int x) {
+	if (x == n + 1) {
+		// 输出
+		for (int i = 1; i <= n; i++){
+			System.out.print(a[i]);
+		}
+		System.out.println();
+	}
+	else {
+		for (int i = 1; i <= n; i++) {
+				if (flag[i] == 0) {
+					flag[i] = 1;
+					
+					a[x] = i;
+					DFS(x + 1);
+					
+					flag[i] = 0;
+				}
+			
+		}
+		
+	}
+}
+
+public static void main(String[] args) {
+    
+	Scanner in = new Scanner(System.in);
+	n = in.nextInt();
+	a = new int[n + 1];
+	flag = new int[n + 1];
+	
+	DFS(1);
+}
+*/
+// 回文数挪动次数
+    /*
+    int n;
+    char a[];
+    Scanner in = new Scanner(System.in);
+    n = in.nextInt();
+    in.nextLine();
+    a = new char[n];
+    String str = in.nextLine();
+    a = str.toCharArray();
+
+    int i, j, ok = -1, sum = 0, find = 0;
+    int change = 0;
+    char c;
+    //from the first one
+    for (i = 0; i < n / 2; i++) {
+        c = a[i];
+        for (j = n - i - 1 + change; j > i; j--) {
+            if (a[j] == c) {
+                //找到
+               ok = j; //找到的位置
+                break;
+            }
+        }
+        //找到之后开始挪动至固定位置
+        if (ok >= 0) {
+            for (int k = j; k < n - i - 1 + change; k++) {
+                if (a[k] != a[k + 1]){
+                    char temp = a[k];
+                    a[k] = a[k + 1];
+                    a[k + 1] = temp;
+                    sum++;
+                }
+            }
+         
+        }else {
+        
+            if (n % 2 == 0) break;
+            else {
+            	find = i;
+            	sum += (n - i * 2) / 2;
+            	change = 1;
+            }
+        }
+        if (i + 1 < n / 2){
+            ok = -1;
+        }
+    }
+
+    if (ok == -1) {
+        System.out.print("Impossible");
+    } else {
+        System.out.print(sum);
+    }
+}
+*/

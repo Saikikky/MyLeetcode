@@ -1,0 +1,192 @@
+import java.util.Scanner;
+
+public class Main {
+	
+	static int N; // 城市个数
+	static int M; // 快速道路的条数
+	static int S; // 出发地编号
+	static int D; // 目的城市编号
+	static int r[]; // 每个城市拥有的救援队数量
+	static int a[][]; // 保存快速通道信息
+	static int t[]; // 暂时保存通道信息 用于存储通道
+	static int min = 99999999; // 保存最短路径长度 
+	static int count; // 不同最短路径的条数
+	static int rescue; // 能够召集的救援队的数量
+	static int s; // 计算最短路径
+	static int d; // 计算救援队数量
+	
+	static void DFS(int x, int y) { // x为起始城市 y为目的地
+		System.out.println(x + " " + y);
+		if (x == y) {
+			
+			// 判断是否为最短路径
+			if (s < min) {
+				count++;
+				min = s;
+				rescue = d;
+			} else if (s == min) {
+				count++;
+				if (rescue < d) {
+					rescue = d;
+				}
+			}
+		} else {
+			for (int i = 0; i < N; i++) {
+				if (a[x][i] != 0) {										0123
+					System.out.println("i = " + i);						1002
+					// 两目的地之间有快速通道								2002
+					s += a[x][i];										3220
+					System.out.println("s = " + s);
+					d += r[i];
+					System.out.println("d = " + d);
+					DFS(i, D);
+					
+					s -= a[x][i];
+					d -= r[i];
+				}
+			}
+		}
+	}
+	
+	public static void main(String[] args) {
+		Scanner in = new Scanner(System.in);
+		N = in.nextInt();
+		M = in.nextInt();
+		S = in.nextInt();
+		D = in.nextInt();
+		r = new int[N];
+		for (int i = 0; i < N; i++) {
+			r[i] = in.nextInt();
+		}
+		t = new int[3];
+		a = new int[N][N];
+		
+		for (int j = 0; j < M; j++) {
+			for (int i = 0; i < 3; i++) {
+				t[i] = in.nextInt();
+			}
+			a[t[0]][t[1]] = t[2];
+			a[t[1]][t[0]] = t[2];
+		}
+		for (int i = 0; i < N; i++) {
+			for (int j = 0; j < N; j++) {
+				System.out.print(a[i][j]);
+			}
+			System.out.println();
+		}
+		d = r[S];
+		// 开始回溯
+		DFS(S, D);
+		
+		System.out.println(count + " " + rescue);
+		
+	}
+}
+
+/*// 交换排序（快速排序）
+import java.util.Scanner;
+
+public class Main {
+	
+	static int n;
+	static int[] a;
+	
+	static void quickSort(int[] a) {
+		
+	}
+	public static void main(String[] args) {
+		Scanner in = new Scanner(System.in);
+		n = in.nextInt();
+		a = new int[n];
+		for (int i = 0; i < n; i++) {
+			a[i] = in.nextInt();
+		}
+		
+		quickSort(a);
+		
+		for (int i = 0; i < n; i++) {
+			System.out.print(a[i]);
+		}
+		System.out.println();
+	}
+}
+*/
+/*
+ * 人鬼过河
+ */
+/*
+import java.util.Map;
+import java.util.Queue;
+import java.util.Scanner;
+
+public class Main {
+	// 人鬼过河 3人3鬼 河上只有一条小船，船上最多能坐两个人或鬼，在河的任何一边
+	// 当鬼的个数比人多时，鬼就会吃掉人。
+	
+	static int[] person; // 人  0为未过河 1为已经过河 
+	static int[] ghost; // 鬼 同上  
+	static int[] num = new int[21];
+	static int count = 0; // 每运一次船就加一
+	static int ok1 = 0; // 人数
+	static int ok2 = 0; // 鬼数
+	static int tag = 1;
+	
+	static class Boat {
+		int p = 0; // 人的数量
+		int g = 0; // 鬼的数量
+	}
+	
+	static Queue<Boat> b;
+	
+	static void DFS(int x) {
+		if (count <= 20) {
+			for (int i = 1; i <= 3; i++) {
+				if (person[i] == 1) ok1++;
+				if (ghost[i] == 1) ok2++;
+			}
+			if (ok1 == 3 && ok2 == 3) {
+				// 输出
+				for (int i = 0; i < b.size(); i++) {
+					Boat boat = b.poll();
+					if (boat.p == 0 && boat.g == 1) {
+						System.out.println("0人1鬼过河");
+					} else if (boat.p == 0 && boat.g == 2) {
+						System.out.println("0人2鬼过河");
+					} else if (boat.p == 1 && boat.g == 0) {
+						System.out.println("1人0鬼过河");
+					} else if (boat.p == 2 && boat.g == 0) {
+						System.out.println("2人0鬼过河");
+					} 
+				}
+				
+			} else {
+				// 递归回溯
+				int temp1 = 0, temp2 = 0;
+				if (ok2 <= ok1 || 3 - ok2 <= 3 - ok1) { // 两边岸存在人大于鬼的情况 否则直接退出
+					if (tag == 1) { // 船在河这边
+						for (int i = 1; i <= 3; i++) { 
+							if (person[i] == 0) temp1++;// 计算在河这边的人数
+							if (ghost[i] == 0) temp2++; // 计算河对岸的人数
+						}
+						
+						
+					} else if (tag == -1) { // 船在河对岸
+						
+					}
+				}
+				
+			}
+		}
+		ok1 = 0;
+		ok2 = 0;
+		
+	}
+
+    public static void main(String[] args) {
+        
+    	person = new int[4];
+    	ghost = new int[4];
+    	
+    }
+}
+*/
