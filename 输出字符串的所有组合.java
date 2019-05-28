@@ -66,4 +66,23 @@ public class Solution {
 
         }
     }
+
+    //  二进制最终解法
+    public static void main(String[] args) {
+        //String str[] = {"A", "B", "C", "D"};
+        String a = "ABC";
+        char[] str = a.toCharArray();
+        int length = str.length;
+        // 得到2^n
+        int nbit = (0xFFFFFFFF >>> (32 - length));
+        for (int i = 1; i <= nbit; i++) {
+            for (int j = 0; j < length; j++) {
+                // 将1向左移动j位(等价于1*2^j) 按位与i 判断结果是否为0
+                if ((1 << j & i) != 0) {
+                    System.out.print(str[j]);
+                }
+            }
+            System.out.println(" ");
+        }
+    }
 }
