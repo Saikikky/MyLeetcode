@@ -73,11 +73,13 @@ public class Solution {
         String a = "ABC";
         char[] str = a.toCharArray();
         int length = str.length;
-        // 得到2^n
+        // 得到2^n 个1
         int nbit = (0xFFFFFFFF >>> (32 - length));
         for (int i = 1; i <= nbit; i++) {
             for (int j = 0; j < length; j++) {
                 // 将1向左移动j位(等价于1*2^j) 按位与i 判断结果是否为0
+                // 1<<i 是将1左移i位，即第i位为1，其余位为0；
+                // n&(1<<i)是将左移i位的1与n进行按位与，即为保留n的第i位，其余位置零
                 if ((1 << j & i) != 0) {
                     System.out.print(str[j]);
                 }
