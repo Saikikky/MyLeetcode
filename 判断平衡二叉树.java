@@ -1,31 +1,25 @@
-class TreeNode {
-    int val = 0;
-    TreeNode left = null;
-    TreeNode right = null;
-
-    public TreeNode(int val) {
-        this.val = val;
-
-    }
-
-}
 /**
- * 判读平衡二叉树  递归判断子树高度 O(n^2)
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
  */
-public class Solution {
-    public boolean IsBalanced_Solution(TreeNode root) {
+class Solution {
+    public boolean isBalanced(TreeNode root) {
         if (root == null) return true;
-        int left = Depth(root.left);
-        int right = Depth(root.right);
-        if (Math.abs(left-right) <= 1) return true;
-        return false;
+        int left = depth(root.left);
+        int right = depth(root.right);
+        if (Math.abs(left - right) > 1) return false;
+        return isBalanced(root.left) && isBalanced(root.right);
     }
-
-    public int Depth(TreeNode root) {
+    
+    public int depth(TreeNode root) {
         if (root == null) return 0;
-        int right = Depth(root.right);
-        int left = Depth(root.left);
-        return right>left?right+1:left+1;
+        int right = depth(root.right);
+        int left = depth(root.left);
+        return right > left ? right+1 : left+1;
     }
 }
-
