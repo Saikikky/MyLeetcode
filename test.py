@@ -35,7 +35,7 @@ def plot_A():
         last_y = value
 
     print("min_y=", min_y)
-    print("min_y_A=", min_y_A)
+    print("min_y_A=", min_y_A)  
 
     fig, ax = plt.subplots()
     ax.plot(x, y)
