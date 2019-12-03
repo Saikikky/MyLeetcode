@@ -1,30 +1,30 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
 class Solution {
-    public boolean search(int[] nums, int target) {
-        if (nums == null || nums.length == 0) return false;
-        int left = 0, right = nums.length - 1;
-        while (left <= right) {
-            int mid = left + ((right - left) / 2);
-            if (nums[mid] == target) return true;
-            if (nums[left] == nums[mid]) {
-                left++;
-                continue;
-            }
-            if (nums[left] <= nums[mid]) {
-                if (target >= nums[left] && target <= nums[mid]) {
-                    right = mid - 1;
-                } else {
-                    left = mid + 1;
-                }
-            } else {
-                if (target >= nums[mid] && target <= nums[right]) {
-                    left = mid + 1;
-                } else {
-                    right = mid - 1;
-                }
-            }
+    public ListNode deleteDuplicates(ListNode head) {
+        ListNode head1 = new ListNode(-1);
+        head1.next = head;
+        ListNode pre;
+        ListNode cur = head1;
 
+        while (cur != null) {
+            pre = cur;
+            cur = cur.next;
+            while (cur != null && cur.next != null && cur.val == cur.next.val) {
+                int temp = cur.val;
+                while (cur != null && cur.val == temp) {
+                    cur = cur.next;
+                }
+                pre.next = cur;
+            }
 
         }
-        return false;
+        return head1.next;
     }
 }
