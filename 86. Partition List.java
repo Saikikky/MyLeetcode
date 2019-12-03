@@ -17,19 +17,20 @@ class Solution {
         while (h != null) {
             if (h.val < x) {
                 h1.next = h;
-                h = h.next;
+                // h = h.next;
                 h1 = h1.next;
-                h1.next = null;
+                // h1.next = null;
 
             } else {
                 h2.next = h;
-                h = h.next;
+                // h = h.next;
                 h2 = h2.next;
-                h2.next = null;
+                // h2.next = null;
 
             }
-
+            h = h.next;
         }
+        h2.next = null;
         h1.next = l2.next;
         return l1.next;
     }
