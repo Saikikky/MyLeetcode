@@ -1,4 +1,4 @@
-class MyQueue {
+class MyQueue {    
     private Stack<Integer> stackPush;
     private Stack<Integer> stackPop;
     /** Initialize your data structure here. */
