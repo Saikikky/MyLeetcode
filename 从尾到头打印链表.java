@@ -47,3 +47,12 @@ public class Solution {
             System.out.println(listNode.val);
         }
     }
+
+// 更新递归方法
+ArrayList<Integer> list = new ArrayList<>();
+public void printListFromTailToHead(ListNode listNode) {
+    if (listNode != null) {
+        printListFromTailToHead(listNode.next);
+        list.add(listNode.val);
+    }
+}
