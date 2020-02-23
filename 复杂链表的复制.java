@@ -10,6 +10,47 @@ public class RandomListNode {
     }
 }
 */
+
+/**
+新旧链表合成一个链表然后再分解
+**/
+public class Solution {
+    public RandomListNode Clone(RandomListNode pHead)
+    {
+        if (pHead == null) return null;
+        RandomListNode tmp = pHead;
+        RandomListNode nextNode = null;
+        while (tmp != null) {
+            RandomListNode newNode = new RandomListNode(tmp.label);
+            nextNode = tmp.next;
+            tmp.next = newNode;
+            newNode.next = nextNode;
+            tmp = nextNode;
+        }
+
+        tmp = pHead;
+        while (tmp != null) {
+            if (tmp.random != null) {
+                tmp.next.random = tmp.random.next;
+            }
+            tmp = tmp.next.next;
+        }
+        tmp = pHead;
+        RandomListNode newList = tmp.next;
+        while (tmp != null) {
+            RandomListNode cloneNode = tmp.next;
+            tmp.next = cloneNode.next;
+            if (cloneNode.next == null) cloneNode.next = null;
+            else cloneNode.next = cloneNode.next.next;
+            tmp = tmp.next;
+        }
+        return newList;
+    }
+}
+
+
+
+
 public class Solution {
     public RandomListNode Clone(RandomListNode pHead)
     {
